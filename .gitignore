@@ -63,3 +63,4 @@ tsconfig.tsbuildinfo
 *.snap
 
 *storybook.log
+storybook-static
