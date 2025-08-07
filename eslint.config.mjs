@@ -86,7 +86,7 @@ const eslintConfig = [
       'no-null/no-null': 'error',
 
       'prettier/prettier': [
-        'error',
+        'off',
         {
           endOfLine: 'auto',
         },
