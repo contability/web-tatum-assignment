@@ -5,7 +5,6 @@ import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import noNull from 'eslint-plugin-no-null';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -42,7 +41,6 @@ const eslintConfig = [
       'jsx-a11y': jsxA11y,
       import: importPlugin,
       'unused-imports': unusedImports,
-      'no-null': noNull,
       prettier: prettier,
     },
     rules: {
@@ -83,7 +81,6 @@ const eslintConfig = [
 
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-      'no-null/no-null': 'error',
 
       'prettier/prettier': [
         'off',
