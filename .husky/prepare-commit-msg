@@ -1,0 +1,50 @@
+#!/bin/bash
+
+message_file="$1"
+commit_source="$2"
+sha1="$3"
+git_dir=$(git rev-parse --git-dir)
+
+if [[ "$commit_source" == "message" && -n "$sha1" ]] || [[ -z "$message_file" && -n "$sha1" ]]; then
+    exit 0
+fi
+
+if test -d "$git_dir/rebase-merge"; then
+    exit 0
+fi
+
+message=$(cat "$message_file")
+first_line=$(echo "$message" | head -n 1)
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+merge_pattern="^Merge branch '.*' into .*$"
+if [[ $first_line =~ $merge_pattern ]]; then
+  exit 0
+fi
+
+commit_format_pattern='^\((add|remove|fix|refactor|merge|hotfix|setup)\) .+'
+
+if [[ ! $first_line =~ $commit_format_pattern ]]; then
+  echo "❌ Git 컨벤션을 준수해주세요!"
+  echo ""
+  echo "git-convention.md 문서를 참고해주세요."
+  echo ""
+  osascript -e 'display notification "Git 컨벤션을 준수해주세요." with title "컨벤션 경고"' 2>/dev/null || true
+  exit 1
+fi
+
+branch_pattern='FRONTEND-([0-9]+)'
+if [[ $current_branch =~ $branch_pattern ]]; then
+  if [[ ! $first_line =~ \[FRONTEND-[0-9]+\] ]]; then
+    remaining_lines=$(echo "$message" | tail -n +2)
+    
+    {
+      echo "$first_line [$current_branch]"
+      if [[ -n "$remaining_lines" ]]; then
+        echo "$remaining_lines"
+      fi
+    } > "$message_file"
+  fi
+fi
+
+exit 0
