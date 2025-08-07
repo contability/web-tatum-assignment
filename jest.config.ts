@@ -6,6 +6,17 @@ const config: Config = {
   preset: 'ts-jest',
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  transform: {
+    '^.+\\.(ts|tsx)$': [
+      'ts-jest',
+      {
+        tsconfig: {
+          jsx: 'react-jsx',
+        },
+      },
+    ],
+  },
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -17,7 +28,6 @@ const config: Config = {
   },
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
-  extensionsToTreatAsEsm: ['.ts', '.tsx'],
 };
 
 export default config;
