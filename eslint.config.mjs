@@ -102,7 +102,7 @@ const eslintConfig = [
     },
   },
   {
-    files: ['**/*.js', '**/*.jsx'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {
       '@typescript-eslint/no-var-requires': 'off',
     },
