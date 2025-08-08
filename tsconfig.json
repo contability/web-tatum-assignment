@@ -13,11 +13,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "baseUrl": "src",
     "paths": {
-      "@Components/*": ["./src/components/*"],
-      "@Styles/*": ["./src/styles/*"],
-      "@Assets/*": ["./src/public/assets/*"],
-      "@Constants/*": ["./src/constants/*"]
+      "@Components/*": ["./components/*"],
+      "@Styles/*": ["./styles/*"],
+      "@Assets/*": ["./public/assets/*"],
+      "@Constants/*": ["./constants/*"]
     },
     "typeRoots": ["node_modules/@types", "src/types"],
     "plugins": [
@@ -26,6 +27,13 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", ".storybook/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "postcss.config.mjs",
+    ".storybook/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -33,6 +33,16 @@ const eslintConfig = [
         },
         project: './tsconfig.json',
       },
+      globals: {
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        jest: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': typescriptEslint,
