@@ -3,16 +3,56 @@
 
 @theme {
   /* 컬러 팔레트 */
-  --color-mustard: #f2dd82;
-  --color-forest: #7b8165;
-  --color-olive: #99a080;
-  --color-sage: #b7bf9b;
-  --color-khaki: #b7b095;
-  --color-sand: #e3d8b3;
-  --color-cream: #f9f2f0;
-  --color-pearl: #f6f2e5;
-  --color-ivory: #faf9f4;
-  --color-white: #ffffff;
+  /* Primary Colors */
+  --color-primary-blue: #4285f4;
+  --color-primary-blue-hover: #3367d6;
+  --color-primary-blue-light: #e8f0fe;
+
+  /* Status Colors */
+  --color-success-green: #34a853;
+  --color-success-light: #e6f4ea;
+  --color-warning-orange: #fbbc04;
+  --color-warning-light: #fef7e0;
+  --color-error-red: #ea4335;
+  --color-error-light: #fce8e6;
+
+  /* Neutral Colors */
+  --color-gray-50: #f8f9fa;
+  --color-gray-100: #f1f3f4;
+  --color-gray-200: #e8eaed;
+  --color-gray-300: #dadce0;
+  --color-gray-400: #bdc1c6;
+  --color-gray-500: #9aa0a6;
+  --color-gray-600: #80868b;
+  --color-gray-700: #5f6368;
+  --color-gray-800: #3c4043;
+  --color-gray-900: #202124;
+
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f1f3f4;
+
+  /* Border Colors */
+  --color-border-light: #e8eaed;
+  --color-border-medium: #dadce0;
+  --color-border-dark: #bdc1c6;
+
+  /* Text Colors */
+  --color-text-primary: #202124;
+  --color-text-secondary: #5f6368;
+  --color-text-tertiary: #80868b;
+  --color-text-disabled: #9aa0a6;
+
+  /* Badge Colors */
+  --color-badge-ready: #1a73e8;
+  --color-badge-ready-bg: #e8f0fe;
+  --color-badge-valid: #137333;
+  --color-badge-valid-bg: #e6f4ea;
+  --color-badge-invalid: #d93025;
+  --color-badge-invalid-bg: #fce8e6;
+  --color-badge-error: #d93025;
+  --color-badge-error-bg: #fce8e6;
 
   /* 브레이크 포인트 */
   ----breakpoint-md: 76.8rem;
@@ -128,7 +168,7 @@
   }
 
   body {
-    background-color: #f6f2e5;
+    /* background-color: #f6f2e5; */
   }
 
   article,
