@@ -14,6 +14,8 @@ import ActionButton from '@Components/button/action-button';
 import { useCloudList } from 'lib/services/cloud/client';
 import Loading from '@Components/spinner/circle';
 import EmptyState from '@Components/data-display/empty-state';
+import { TbEdit } from 'react-icons/tb';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 
 const CloudContentList = () => {
   const { data: cloudListData, isLoading } = useCloudList();
@@ -95,29 +97,29 @@ const CloudContentList = () => {
                   </TableCell>
 
                   <TableCell>
-                    <Chip variant="success">READY</Chip>
+                    <Chip variant="primary">READY</Chip>
                   </TableCell>
 
                   <TableCell>
-                    <Chip variant={cloudData.eventProcessEnabled ? 'success' : 'error'}>
+                    <Chip variant={cloudData.eventProcessEnabled ? 'primary' : 'warning'}>
                       {cloudData.eventProcessEnabled ? 'VALID' : 'INVALID'}
                     </Chip>
                   </TableCell>
 
                   <TableCell>
-                    <Chip variant={cloudData.scheduleScanEnabled ? 'success' : 'neutral'}>
+                    <span className={cloudData.scheduleScanEnabled ? 'text-success-green' : 'text-gray-700'}>
                       {cloudData.scheduleScanEnabled ? 'Set' : 'Not Set'}
-                    </Chip>
+                    </span>
                   </TableCell>
 
                   <TableCell>
-                    <Chip variant="success">ON</Chip>
+                    <span className="text-success-green">ON</span>
                   </TableCell>
 
                   <TableCell>
-                    <Chip variant={cloudData.userActivityEnabled ? 'success' : 'neutral'}>
+                    <span className={cloudData.userActivityEnabled ? 'text-success-green' : 'text-gray-500'}>
                       {cloudData.userActivityEnabled ? 'ON' : 'OFF'}
-                    </Chip>
+                    </span>
                   </TableCell>
 
                   <TableCell>
@@ -125,15 +127,15 @@ const CloudContentList = () => {
                   </TableCell>
 
                   <TableCell>
-                    <ActionButton theme="blue" aria-label={`${cloudData.name} 편집`}>
-                      EDIT
-                    </ActionButton>
+                    <button type="button">
+                      <TbEdit className="text-primary-blue" size={20} />
+                    </button>
                   </TableCell>
 
                   <TableCell>
-                    <ActionButton theme="red" aria-label={`${cloudData.name} 삭제`}>
-                      DELETE
-                    </ActionButton>
+                    <button type="button">
+                      <RiDeleteBin5Line className="text-error-red" size={20} />
+                    </button>
                   </TableCell>
                 </TableRow>
               ))}
