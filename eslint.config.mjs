@@ -9,6 +9,7 @@ import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -20,6 +21,7 @@ const eslintConfig = [
   ...compat.extends('next/core-web-vitals'),
   ...compat.extends('prettier'),
   ...storybook.configs['flat/recommended'],
+  ...pluginQuery.configs['flat/recommended'],
 
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
