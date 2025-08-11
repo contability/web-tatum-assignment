@@ -18,9 +18,9 @@
       "@Components/*": ["./components/*"],
       "@Styles/*": ["./styles/*"],
       "@Assets/*": ["./public/assets/*"],
-      "@Constants/*": ["./constants/*"]
+      "@Constants/*": ["./constants/*"],
+      "@DataTypes/*": ["./types/*"]
     },
-    "typeRoots": ["node_modules/@types", "src/types"],
     "plugins": [
       {
         "name": "next"

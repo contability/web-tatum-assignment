@@ -1,6 +1,6 @@
 import { CLOUD_LIST_DATA } from '@Constants/cloud-instance';
+import { Cloud } from '@DataTypes/types';
 import { NextResponse } from 'next/server';
-import { Cloud } from 'types/types';
 
 const getCloudListWithDelay = (): Promise<Cloud[]> => {
   return new Promise(resolve => {
@@ -13,10 +13,10 @@ const getCloudListWithDelay = (): Promise<Cloud[]> => {
 export async function GET() {
   try {
     const cloudList = await getCloudListWithDelay();
-
     return NextResponse.json({
       success: true,
-      data: cloudList,
+      httpStatusCode: 200,
+      result: cloudList,
     });
   } catch (error) {
     console.error('Error fetching cloud list:', error);

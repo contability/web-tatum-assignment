@@ -1,3 +1,4 @@
+import ReactQueryClientProvider from '@Components/providers/react-query-client-provider';
 import '@Styles/global.css';
 
 import { Metadata, Viewport } from 'next';
@@ -31,7 +32,9 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+      </body>
     </html>
   );
 };
