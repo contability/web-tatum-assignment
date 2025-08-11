@@ -34,6 +34,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <body>
         <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        <div id="root-modal" role="dialog" aria-label="모달" />
       </body>
     </html>
   );
