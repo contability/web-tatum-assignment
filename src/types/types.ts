@@ -45,9 +45,9 @@ interface ScheduleScanSetting {
    * MONTH : 매월을 의미      date, hour, minute 활성화
    */
   frequency: 'HOUR' | 'DAY' | 'WEEK' | 'MONTH';
-  date: string; // '0' ~ '28'
-  weekday: 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
-  hour: string; // '0' ~ '23'
+  date?: string; // '0' ~ '28'
+  weekday?: 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+  hour?: string; // '0' ~ '23'
   minute: string; // '0' ~ '60', '5' 단위로 즈악
 }
 

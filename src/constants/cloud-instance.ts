@@ -1,4 +1,6 @@
-export const CLOUD_LIST_DATA = [
+import { Cloud } from 'types/types';
+
+export const CLOUD_LIST_DATA: Cloud[] = [
   {
     id: '1',
     provider: 'AWS',
