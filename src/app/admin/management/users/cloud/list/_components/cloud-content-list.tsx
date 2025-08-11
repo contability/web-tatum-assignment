@@ -1,4 +1,5 @@
-import { CLOUD_LIST_DATA } from '@Constants/cloud-instance';
+'use client';
+
 import Chip from '@Components/chip';
 import ResponsiveDataView from '@Components/data-display/responsive-data-view';
 import Table from '@Components/table/table';
@@ -10,10 +11,36 @@ import TableCell from '@Components/table/table-cell';
 import MobileCard from '@Components/card/mobile-card';
 import MobileCardField from '@Components/card/mobile-card-field';
 import ActionButton from '@Components/button/action-button';
+import { useCloudList } from 'lib/services/cloud/client';
+import Loading from '@Components/spinner/circle';
+import EmptyState from '@Components/data-display/empty-state';
 
 const CloudContentList = () => {
+  const { data: cloudListData, isLoading } = useCloudList();
+  const dataResult = cloudListData?.result;
+
+  if (isLoading) {
+    return (
+      <section>
+        <div className="flex items-center justify-center py-8">
+          <Loading />
+        </div>
+      </section>
+    );
+  }
+
+  if (!dataResult || dataResult.length === 0) {
+    return (
+      <section>
+        <div className="flex items-center justify-center py-8">
+          <EmptyState />
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="mt-8">
+    <section>
       <ResponsiveDataView
         ariaLabel="클라우드 계정 목록"
         desktopView={
@@ -35,7 +62,7 @@ const CloudContentList = () => {
             </TableHeader>
 
             <TableBody>
-              {CLOUD_LIST_DATA.map(cloudData => (
+              {dataResult.map(cloudData => (
                 <TableRow key={`cloud-list__${cloudData.id}`}>
                   <TableCell>
                     <span className="font-medium text-blue-600">{cloudData.provider}</span>
@@ -113,7 +140,7 @@ const CloudContentList = () => {
             </TableBody>
           </Table>
         }
-        mobileView={CLOUD_LIST_DATA.map(cloudData => (
+        mobileView={dataResult.map(cloudData => (
           <MobileCard
             key={`mobile-cloud-${cloudData.id}`}
             title={

@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import CloudContentList from './_components/cloud-content-list';
+import { prefetchCloudList } from 'lib/services/cloud/server';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-const AdminManagementUsersCloudListPage = () => {
+const AdminManagementUsersCloudListPage = async () => {
+  const queryClient = await prefetchCloudList();
   return (
-    <main className="p-11">
+    <main className="space-y-8 p-11">
       <section>
         <Link
           href="/admin/management/users/cloud/register"
@@ -12,7 +15,9 @@ const AdminManagementUsersCloudListPage = () => {
           Create Cloud
         </Link>
       </section>
-      <CloudContentList />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <CloudContentList />
+      </HydrationBoundary>
     </main>
   );
 };
