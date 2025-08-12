@@ -9,16 +9,20 @@ export const scheduleScanSettingSchema = z.object({
 });
 
 export const cloudFormSchema = z.object({
-  id: z.string(),
-  name: z.string().min(1, { message: '이름을 입력해주세요.' }),
+  id: z.string().optional(),
+  name: z.string().min(1, { message: '필수 입력 필드입니다.' }),
   credentialType: z.string(),
   provider: z.string(),
-  accessKey: z.string(),
-  secretAccessKey: z.string(),
+  accessKey: z.string().min(1, { message: '필수 입력 필드입니다.' }),
+  secretAccessKey: z.string().min(1, { message: '필수 입력 필드입니다.' }),
   region: z.string(),
   proxyUrl: z.string(),
   scheduleScanEnabled: z.boolean().optional(),
-  scheduleScanSetting: scheduleScanSettingSchema,
+  frequency: z.string(),
+  date: z.string(),
+  weekday: z.string(),
+  hour: z.string(),
+  minute: z.string(),
   cloudTrailName: z.string(),
 });
 

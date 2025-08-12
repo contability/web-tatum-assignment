@@ -5,6 +5,7 @@ export interface ModalContainerProps {
   onClose?: () => void;
 }
 
+// FIXME: 모달 크기 동적으로 조절할 수 있도록 변경 필요
 const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerProps>) => {
   return (
     <motion.div
@@ -21,7 +22,7 @@ const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerP
         ease: 'easeInOut',
         duration: 0.3,
       }}
-      className="fixed inset-0 z-[52] flex h-dvh bg-black/70"
+      className="fixed inset-0 z-[52] flex h-dvh items-center justify-center bg-black/70"
       onClick={onClose}
       aria-modal="true"
       onKeyDown={e => {
@@ -30,11 +31,7 @@ const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerP
         }
       }}
     >
-      <div
-        className="absolute top-1/2 left-1/2 z-[53] w-full min-w-[25rem] -translate-x-1/2 -translate-y-1/2 md:min-w-[50rem]"
-        onClick={e => e.stopPropagation()}
-        role="presentation"
-      >
+      <div className="w-full px-4" onClick={e => e.stopPropagation()} role="presentation">
         {children}
       </div>
     </motion.div>

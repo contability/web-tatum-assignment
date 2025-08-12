@@ -11,6 +11,7 @@ import { FiPlus } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
 import { cloudFormSchema, CloudFormValues } from '../_schema/cloud';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { convertValidationObjectValue } from '@Utils/validation';
 
 const CreateButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -18,12 +19,12 @@ const CreateButton = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<CloudFormValues>({
     resolver: zodResolver(cloudFormSchema),
     mode: 'onSubmit',
     defaultValues: {
-      id: '',
       name: '',
       provider: '',
       credentialType: '',
@@ -31,20 +32,35 @@ const CreateButton = () => {
       secretAccessKey: '',
       region: '',
       proxyUrl: '',
-      scheduleScanSetting: {
-        frequency: '',
-        date: '',
-        weekday: '',
-        hour: '',
-        minute: '',
-      },
+      frequency: '',
+      date: '',
+      weekday: '',
+      hour: '',
+      minute: '',
       cloudTrailName: '',
     },
   });
 
+  const nameValue = watch('name');
+  const providerValue = watch('provider');
+  const credentialTypeValue = watch('credentialType');
+  const accessKeyValue = watch('accessKey');
+  const secretAccessKeyValue = watch('secretAccessKey');
+  const regionValue = watch('region');
+  const proxyUrlValue = watch('proxyUrl');
+  const frequencyValue = watch('frequency');
+  const dateValue = watch('date');
+  const weekdayValue = watch('weekday');
+  const hourValue = watch('hour');
+  const minuteValue = watch('minute');
+  const cloudTrailNameValue = watch('cloudTrailName');
+
   const onSubmit = (cloudFormValues: CloudFormValues) => {
-    alert('ewlkfn');
-    console.log('🚀 ~ onSubmit ~ cloudFormValues:', cloudFormValues);
+    const body = convertValidationObjectValue(cloudFormValues);
+    console.log('✨ Form validation passed');
+    console.log('🚀 [Cloud Creation] POST /api/admin/management/users/cloud/list');
+    console.log('📦 Request Body:', body);
+    setIsModalOpen(false);
   };
 
   return (
@@ -57,7 +73,7 @@ const CreateButton = () => {
         <span>Create Cloud</span>
       </button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="w-full max-w-4xl rounded-md bg-white shadow-md md:max-h-[80rem] md:max-w-[80rem]">
+        <div className="w-full max-w-4xl rounded-md bg-white shadow-md md:max-w-[80rem]">
           <div className="flex items-center justify-between px-8 py-6">
             <h3 className="text-4xl font-bold">Create Cloud</h3>
             <button onClick={() => setIsModalOpen(false)}>
@@ -73,11 +89,16 @@ const CreateButton = () => {
                   isRequired={true}
                   error={errors.name}
                 >
-                  <Input id="cloud-name" placeholder="Please enter the cloud name." {...register('name')} />
+                  <Input
+                    id="cloud-name"
+                    placeholder="Please enter the cloud name."
+                    {...register('name')}
+                    value={nameValue}
+                  />
                 </FormField>
 
                 <FormField label={{ content: 'Select Provider' }} isLineBreak={true} error={errors.provider}>
-                  <Select optionList={PROVIDER_OPTIONS} value="AWS" register={register('provider')} />
+                  <Select optionList={PROVIDER_OPTIONS} register={register('provider')} value={providerValue} />
                 </FormField>
 
                 <FormField
@@ -87,8 +108,8 @@ const CreateButton = () => {
                 >
                   <Select
                     optionList={AWS_CREDENTIAL_TYPE_OPTIONS}
-                    value="ACCESS_KEY"
                     register={register('credentialType')}
+                    value={credentialTypeValue}
                   />
                 </FormField>
               </fieldset>
@@ -101,25 +122,30 @@ const CreateButton = () => {
                     isRequired={true}
                     error={errors.accessKey}
                   >
-                    <Input id="access-key" {...register('accessKey')} />
+                    <Input id="access-key" {...register('accessKey')} value={accessKeyValue} />
                   </FormField>
                   <FormField
                     label={{ id: 'secret-key', content: 'Secret Key' }}
                     isRequired={true}
                     error={errors.secretAccessKey}
                   >
-                    <Input id="secret-key" {...register('secretAccessKey')} />
+                    <Input id="secret-key" {...register('secretAccessKey')} value={secretAccessKeyValue} />
                   </FormField>
                 </div>
               </fieldset>
 
               <fieldset className="space-y-6 py-8">
                 <FormField label={{ content: 'Region' }} isLineBreak={true} error={errors.region}>
-                  <Select optionList={AWS_REGION_LIST} value="global" register={register('region')} />
+                  <Select optionList={AWS_REGION_LIST} value={regionValue} register={register('region')} />
                 </FormField>
 
                 <FormField label={{ id: 'proxy-url', content: 'Proxy URL' }} isLineBreak={true} error={errors.proxyUrl}>
-                  <Input id="proxy-url" placeholder="Please enter the proxy URL." {...register('proxyUrl')} />
+                  <Input
+                    id="proxy-url"
+                    placeholder="Please enter the proxy URL."
+                    {...register('proxyUrl')}
+                    value={proxyUrlValue}
+                  />
                 </FormField>
 
                 {/* <FormField label={{ content: 'Scan Schedule Setting' }} isLineBreak={true} error={errors.scheduleScanSetting}> */}
@@ -130,55 +156,19 @@ const CreateButton = () => {
               <fieldset className="space-y-6 py-8">
                 <h5>Set Scan Frequency</h5>
                 <p className="text-sm text-gray-700 md:text-base">Scan Schedule: Daily 12:00 AM</p>
-                <Select
-                  optionList={AWS_REGION_LIST}
-                  value="global"
-                  register={register('scheduleScanSetting.frequency')}
-                />
+                <Select optionList={AWS_REGION_LIST} value={frequencyValue} register={register('frequency')} />
                 <div className="space-y-4 pl-8">
-                  <FormField
-                    labelClassName="w-28 text-right"
-                    label={{ content: 'Date' }}
-                    error={errors.scheduleScanSetting?.date}
-                  >
-                    <Select
-                      optionList={AWS_REGION_LIST}
-                      value="global"
-                      register={register('scheduleScanSetting.date')}
-                    />
+                  <FormField labelClassName="w-28 text-right" label={{ content: 'Date' }} error={errors.date}>
+                    <Select optionList={AWS_REGION_LIST} value={dateValue} register={register('date')} />
                   </FormField>
-                  <FormField
-                    labelClassName="w-28 text-right"
-                    label={{ content: 'Day of Week' }}
-                    error={errors.scheduleScanSetting?.weekday}
-                  >
-                    <Select
-                      optionList={AWS_REGION_LIST}
-                      value="global"
-                      register={register('scheduleScanSetting.weekday')}
-                    />
+                  <FormField labelClassName="w-28 text-right" label={{ content: 'Day of Week' }} error={errors.weekday}>
+                    <Select optionList={AWS_REGION_LIST} value={weekdayValue} register={register('weekday')} />
                   </FormField>
-                  <FormField
-                    labelClassName="w-28 text-right"
-                    label={{ content: 'Hour' }}
-                    error={errors.scheduleScanSetting?.hour}
-                  >
-                    <Select
-                      optionList={AWS_REGION_LIST}
-                      value="global"
-                      register={register('scheduleScanSetting.hour')}
-                    />
+                  <FormField labelClassName="w-28 text-right" label={{ content: 'Hour' }} error={errors.hour}>
+                    <Select optionList={AWS_REGION_LIST} value={hourValue} register={register('hour')} />
                   </FormField>
-                  <FormField
-                    labelClassName="w-28 text-right"
-                    label={{ content: 'Minute' }}
-                    error={errors.scheduleScanSetting?.minute}
-                  >
-                    <Select
-                      optionList={AWS_REGION_LIST}
-                      value="global"
-                      register={register('scheduleScanSetting.minute')}
-                    />
+                  <FormField labelClassName="w-28 text-right" label={{ content: 'Minute' }} error={errors.minute}>
+                    <Select optionList={AWS_REGION_LIST} value={minuteValue} register={register('minute')} />
                   </FormField>
                 </div>
               </fieldset>
@@ -194,6 +184,7 @@ const CreateButton = () => {
                       id="cloud-trail-name"
                       placeholder="Please enter the cloud trail name."
                       {...register('cloudTrailName')}
+                      value={cloudTrailNameValue}
                     />
                   </FormField>
                 </div>
@@ -208,6 +199,7 @@ const CreateButton = () => {
               >
                 Cancel
               </button>
+              {/* TODO: ConfirmButton 컴포넌트 추가 필요 */}
               <button
                 onClick={() => {}}
                 type="submit"

@@ -52,7 +52,7 @@ const FormField = ({
         {children}
       </div>
       {error && (
-        <p className={twMerge('mt-1 ml-[3.5rem] text-sm text-red-600', isLineBreak && 'ml-0')} role="alert">
+        <p className={twMerge('mt-1 ml-[6rem] text-sm text-red-600', isLineBreak && 'ml-0')} role="alert">
           {error.message}
         </p>
       )}
