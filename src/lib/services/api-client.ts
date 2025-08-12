@@ -1,4 +1,4 @@
-import { ErrorResponse } from '@DatatTypes/api/error-response';
+import { ErrorResponse } from '@DataTypes/api/error-response';
 import axios, { type AxiosResponse, type AxiosInstance, type AxiosRequestConfig, type AxiosError } from 'axios';
 
 const createAxios = (requestConfig: AxiosRequestConfig): AxiosInstance => {
