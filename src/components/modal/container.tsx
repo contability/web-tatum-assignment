@@ -31,7 +31,7 @@ const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerP
       }}
     >
       <div
-        className="absolute top-1/2 left-1/2 z-[53] w-fit min-w-[25rem] -translate-x-1/2 -translate-y-1/2 md:min-w-[50rem]"
+        className="absolute top-1/2 left-1/2 z-[53] w-full min-w-[25rem] -translate-x-1/2 -translate-y-1/2 md:min-w-[50rem]"
         onClick={e => e.stopPropagation()}
         role="presentation"
       >
