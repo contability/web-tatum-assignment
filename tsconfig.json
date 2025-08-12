@@ -19,7 +19,8 @@
       "@Styles/*": ["./styles/*"],
       "@Assets/*": ["./public/assets/*"],
       "@Constants/*": ["./constants/*"],
-      "@DataTypes/*": ["./types/*"]
+      "@DataTypes/*": ["./types/*"],
+      "@Utils/*": ["./lib/utils/*"]
     },
     "plugins": [
       {

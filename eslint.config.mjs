@@ -44,6 +44,7 @@ const eslintConfig = [
         beforeAll: 'readonly',
         afterAll: 'readonly',
         jest: 'readonly',
+        test: 'readonly',
       },
     },
     plugins: {
