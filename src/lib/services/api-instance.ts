@@ -20,12 +20,6 @@ const createAxios = (requestConfig: AxiosRequestConfig): AxiosInstance => {
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
       if (response.data.status && response.data.status !== 200) {
-        // MEMO: 에러 분기 처리 요구사항 없으므로 생략.
-        // if (response.data.status === 401) {}
-
-        // MEMO: reissue 처리 요구사항 없으므로 생략.
-        // if (response.data.status === 498) {}
-
         const errorResponse = response.data as ErrorResponse;
         return Promise.reject({
           url: response.config?.url,
@@ -39,12 +33,6 @@ const createAxios = (requestConfig: AxiosRequestConfig): AxiosInstance => {
     },
     (error: AxiosError<ErrorResponse>) => {
       if (error.response) {
-        // MEMO: 에러 분기 처리 요구사항 없으므로 생략.
-        // if (error.response.status === 401) {}
-
-        // MEMO: reissue 처리 요구사항 없으므로 생략.
-        // if (error.response.status === 498) {}
-
         console.error('API 응답 에러:', {
           url: error.config?.url,
           status: error.response.status,

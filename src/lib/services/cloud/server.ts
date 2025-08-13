@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { QUERY_KEY_FACTORY } from '../query-key-factory';
-import { axiosServerAPI } from '../api-client';
+import { axiosServerAPI } from '../api-instance';
 import { StandardResponse } from '@DataTypes/api/standard-response';
 import { Cloud } from '@DataTypes/types';
 

@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY_FACTORY } from '../query-key-factory';
-import { axiosClientAPI } from '../api-client';
+import { axiosClientAPI } from '../api-instance';
 import { StandardResponse } from '@DataTypes/api/standard-response';
 import { Cloud } from '@DataTypes/types';
 
