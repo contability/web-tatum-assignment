@@ -27,11 +27,11 @@ import DynamicCredentialFields from './dynamic-credential-fields';
 
 interface CreateCloudModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  handleCloseModal: () => void;
   onSubmit: (formData: CloudFormValues) => void;
 }
 
-const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) => {
+const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudModalProps) => {
   const {
     register,
     handleSubmit,
@@ -39,6 +39,7 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
     control,
     formState: { errors, isValid },
     setValue,
+    reset,
   } = useForm<CloudFormValues>({
     resolver: zodResolver(cloudFormSchema),
     mode: 'onChange',
@@ -67,6 +68,11 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
       cloudTrailName: '',
     },
   });
+
+  const handleClose = () => {
+    reset();
+    handleCloseModal();
+  };
 
   const nameValue = watch('name');
   const providerValue = watch('provider');
@@ -130,12 +136,12 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
   }, [frequencyValue, setValue]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className="w-full max-w-4xl md:max-w-[80rem]">
+    <Modal isOpen={isOpen} onClose={handleClose} className="w-full max-w-4xl md:max-w-[80rem]">
       <div className="w-full rounded-md bg-white shadow-md">
         <div className="flex items-center justify-between px-8 py-6">
           <h2 className="text-4xl font-bold">Create Cloud</h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="모달 닫기"
             className="rounded-full p-1 transition-colors hover:bg-gray-100"
           >
@@ -275,7 +281,7 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
           </div>
 
           <div className="flex items-center justify-end gap-3 px-8 py-6">
-            <BasicButton onClick={onClose} type="button" variant="outline">
+            <BasicButton onClick={handleClose} type="button" variant="outline">
               Cancel
             </BasicButton>
             <ConfirmButton type="submit" theme="blue" isValid={isValid}>

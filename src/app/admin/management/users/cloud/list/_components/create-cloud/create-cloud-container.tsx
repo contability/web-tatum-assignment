@@ -29,7 +29,7 @@ const CreateCloudContainer = () => {
   return (
     <>
       <CreateCloudButton onClick={handleOpenModal} />
-      <CreateCloudModal isOpen={isModalOpen} onClose={handleCloseModal} onSubmit={handleSubmit} />
+      <CreateCloudModal isOpen={isModalOpen} handleCloseModal={handleCloseModal} onSubmit={handleSubmit} />
     </>
   );
 };
