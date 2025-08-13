@@ -8,20 +8,20 @@ describe('BasicButton', () => {
     expect(screen.getByText('Button Text')).toBeInTheDocument();
   });
 
-  it('기본 variant는 outline이고 theme는 gray이다', () => {
+  it('기본 클래스가 올바르게 적용된다', () => {
     render(<BasicButton>Default</BasicButton>);
     const button = screen.getByRole('button');
-    expect(button).toHaveClass('bg-white', 'text-gray-700', 'border-gray-400');
+    expect(button).toHaveClass('btn-base', 'btn-outline-gray', 'btn-md');
   });
 
-  it('theme이 올바르게 적용된다', () => {
+  it('theme과 variant가 올바르게 적용된다', () => {
     render(
       <BasicButton theme="blue" variant="default">
         Blue Theme
       </BasicButton>,
     );
     const button = screen.getByRole('button');
-    expect(button).toHaveClass('bg-blue-600', 'text-white', 'border-blue-600');
+    expect(button).toHaveClass('btn-base', 'btn-default-blue', 'btn-md');
   });
 
   it('onClick 이벤트가 올바르게 동작한다', () => {
