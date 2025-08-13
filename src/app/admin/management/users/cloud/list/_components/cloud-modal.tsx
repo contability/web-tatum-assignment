@@ -270,13 +270,13 @@ const CloudModal = ({ isOpen, cloudId, handleCloseModal, onSubmit }: CloudModalP
                   ]}
                   name="scheduleScanEnabled"
                   control={control}
-                  className="flex flex-col items-center gap-2 md:flex-row"
+                  className="flex flex-col gap-2 md:flex-row"
                 />
               </FormField>
             </fieldset>
 
             <fieldset className="space-y-6 py-8">
-              <legend>Set Scan Frequency</legend>
+              <h4>Set Scan Frequency</h4>
               <p className="text-sm text-gray-700 md:text-base">Scan Schedule: Daily 12:00 AM</p>
               <Select optionList={SCHEDULE_FREQUENCY_OPTIONS} value={frequencyValue} register={register('frequency')} />
               <div className="space-y-4 pl-8">
@@ -316,7 +316,7 @@ const CloudModal = ({ isOpen, cloudId, handleCloseModal, onSubmit }: CloudModalP
             </fieldset>
 
             <fieldset className="space-y-6 py-8">
-              <legend>Event Integration</legend>
+              <h4>Event Integration</h4>
               <div className="space-y-4 pl-2">
                 <FormField label={{ id: 'cloud-trail-name', content: 'CloudTrail Name' }} error={errors.cloudTrailName}>
                   <Input

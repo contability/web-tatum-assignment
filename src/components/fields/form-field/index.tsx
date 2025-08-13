@@ -36,8 +36,8 @@ const FormField = ({
           <label
             htmlFor={label.id}
             className={twMerge(
-              'mb-1 block w-fit text-sm font-medium whitespace-pre text-gray-700 md:text-base lg:text-lg',
-              isLineBreak && 'w-full',
+              'mb-1 block min-w-fit text-right text-sm font-medium whitespace-pre text-gray-700 md:text-left md:text-base lg:text-lg',
+              isLineBreak && 'w-full text-left',
               labelClassName,
             )}
           >

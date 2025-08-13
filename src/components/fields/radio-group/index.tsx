@@ -27,7 +27,7 @@ const RadioGroup = <T extends FieldValues = FieldValues>({
   };
 
   return (
-    <div className={`flex w-full flex-wrap items-center gap-4 ${className}`}>
+    <div className={`flex w-full flex-wrap gap-4 ${className}`}>
       {optionList.map(option => {
         const isSelected = value === option.value;
         return (

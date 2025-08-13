@@ -45,6 +45,7 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
         label={{ id: field.id, content: field.label }}
         isRequired={field.required}
         error={fieldError}
+        labelClassName="min-w-[5.3rem]"
       >
         {field.type === 'textarea' ? (
           <textarea
@@ -61,7 +62,7 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
 
   return (
     <fieldset className="py-8">
-      <legend className="mb-6">Credentials</legend>
+      <h4 className="mb-6">Credentials</h4>
       <div className="space-y-4 pl-8">{fields.map(renderField)}</div>
     </fieldset>
   );
