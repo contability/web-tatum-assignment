@@ -27,28 +27,35 @@ const FormField = ({
   isRequired = false,
   children,
 }: PropsWithChildren<FormFieldProps>) => {
+  const commonClassName = twMerge(
+    'mb-1 block min-w-fit text-right text-sm font-medium whitespace-pre text-gray-700 md:text-left md:text-base lg:text-lg',
+    isLineBreak && 'w-full text-left',
+    labelClassName,
+  );
+
+  const labelContent = (
+    <>
+      {label?.content}
+      {isRequired && (
+        <span className="ml-1 text-red-500" aria-label="필수 입력">
+          *
+        </span>
+      )}
+    </>
+  );
   return (
     <div className={twMerge('flex flex-col', className)}>
       <div
         className={twMerge('flex items-center gap-2 lg:gap-3', isLineBreak && 'flex-col items-baseline gap-1 lg:gap-1')}
       >
-        {label?.content && (
-          <label
-            htmlFor={label.id}
-            className={twMerge(
-              'mb-1 block min-w-fit text-right text-sm font-medium whitespace-pre text-gray-700 md:text-left md:text-base lg:text-lg',
-              isLineBreak && 'w-full text-left',
-              labelClassName,
-            )}
-          >
-            {label.content}
-            {isRequired && (
-              <span className="ml-1 text-red-500" aria-label="필수 입력">
-                *
-              </span>
-            )}
-          </label>
-        )}
+        {label?.content &&
+          (label.id ? (
+            <label htmlFor={label.id} className={commonClassName}>
+              {labelContent}
+            </label>
+          ) : (
+            <b className={commonClassName}>{labelContent}</b>
+          ))}
         {children}
       </div>
       {error && (

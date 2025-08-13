@@ -45,7 +45,7 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
         label={{ id: field.id, content: field.label }}
         isRequired={field.required}
         error={fieldError}
-        labelClassName="min-w-[5.3rem]"
+        labelClassName="min-w-[5.3rem] md:min-w-[6.8rem]"
       >
         {field.type === 'textarea' ? (
           <textarea
