@@ -63,8 +63,8 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
   const cloudTrailNameValue = watch('cloudTrailName');
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="w-full max-w-4xl rounded-md bg-white shadow-md md:max-w-[80rem]">
+    <Modal isOpen={isOpen} onClose={onClose} className="w-full max-w-4xl md:max-w-[80rem]">
+      <div className="w-full rounded-md bg-white shadow-md">
         <div className="flex items-center justify-between px-8 py-6">
           <h2 className="text-4xl font-bold">Create Cloud</h2>
           <button

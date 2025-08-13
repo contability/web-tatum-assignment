@@ -1,12 +1,11 @@
 import { motion } from 'motion/react';
-import type { PropsWithChildren } from 'react';
 
 export interface ModalContainerProps {
   onClose?: () => void;
 }
 
 // FIXME: 모달 크기 동적으로 조절할 수 있도록 변경 필요
-const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerProps>) => {
+const ModalOverlay = ({ onClose }: ModalContainerProps) => {
   return (
     <motion.div
       initial={{
@@ -30,12 +29,8 @@ const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerP
           onClose?.();
         }
       }}
-    >
-      <div className="w-fit px-4" onClick={e => e.stopPropagation()} role="presentation">
-        {children}
-      </div>
-    </motion.div>
+    />
   );
 };
 
-export default ModalContainer;
+export default ModalOverlay;

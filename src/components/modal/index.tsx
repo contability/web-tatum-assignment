@@ -3,14 +3,15 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
-import ModalContainer from './container';
+import ModalOverlay from './overlay';
 
 export interface ModalProps {
   isOpen: boolean;
+  className?: string;
   onClose?: () => void;
 }
 
-const Modal = ({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) => {
+const Modal = ({ isOpen, onClose, className = '', children }: PropsWithChildren<ModalProps>) => {
   const [portalElement, setPortalElement] = useState<Element | null>(null);
 
   useEffect(() => {
@@ -28,9 +29,10 @@ const Modal = ({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) => 
     return createPortal(
       <AnimatePresence>
         {isOpen && (
-          <ModalContainer onClose={onClose}>
+          <>
+            <ModalOverlay onClose={onClose} />
             <motion.div
-              className="block px-4"
+              className={`absolute top-1/2 left-1/2 z-[53] block w-auto -translate-x-1/2 -translate-y-1/2 px-4 ${className}`}
               initial={{
                 y: 20,
                 opacity: 0,
@@ -50,7 +52,7 @@ const Modal = ({ isOpen, onClose, children }: PropsWithChildren<ModalProps>) => 
             >
               {children}
             </motion.div>
-          </ModalContainer>
+          </>
         )}
       </AnimatePresence>,
       portalElement,

@@ -20,7 +20,6 @@ const Select = ({ optionList, value, register, className }: SelectProps) => {
 
   const selectedOption = optionList.find(option => parseValue(option.value) === parseValue(value))?.label || '선택';
 
-  // FIXME: 영역 바깥 클릭했을 때 모달 안닫힘
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (buttonRef.current && !buttonRef.current.contains(event.target as Node)) setIsOpen(false);
