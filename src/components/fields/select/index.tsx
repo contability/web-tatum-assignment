@@ -1,19 +1,14 @@
 'use client';
 
+import { LabelValuePair } from '@DataTypes/pair';
 import { parseValue } from '@Utils/parse-value';
 import { useState, useRef, useEffect, type ChangeEvent } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { twMerge } from 'tailwind-merge';
 
-export interface SelectOption {
-  value: string | number;
-  label: string;
-  disabled?: boolean;
-}
-
 interface SelectProps {
-  optionList: SelectOption[];
+  optionList: LabelValuePair[];
   value: string;
   register?: UseFormRegisterReturn;
   className?: string;

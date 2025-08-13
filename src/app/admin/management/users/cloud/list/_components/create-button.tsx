@@ -3,6 +3,7 @@
 import FormField from '@Components/fields/form-field';
 import Input from '@Components/fields/input';
 import Select from '@Components/fields/select';
+import RadioGroup from '@Components/fields/radio-group';
 import Modal from '@Components/modal';
 import { AWS_CREDENTIAL_TYPE_OPTIONS, AWS_REGION_LIST, PROVIDER_OPTIONS } from '@Constants/cloud-option-list';
 import { memo, useState } from 'react';
@@ -22,7 +23,8 @@ const CreateButton = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    control,
+    formState: { errors, isValid },
   } = useForm<CloudFormValues>({
     resolver: zodResolver(cloudFormSchema),
     mode: 'onChange',
@@ -34,6 +36,7 @@ const CreateButton = () => {
       secretAccessKey: '',
       region: '',
       proxyUrl: '',
+      scheduleScanEnabled: 'true',
       frequency: '',
       date: '',
       weekday: '',
@@ -150,10 +153,21 @@ const CreateButton = () => {
                   />
                 </FormField>
 
-                {/* TODO: 라디오 버튼 추가 필요 */}
-                {/* <FormField label={{ content: 'Scan Schedule Setting' }} isLineBreak={true} error={errors.scheduleScanSetting}> */}
-                {/* <Select optionList={AWS_CREDENTIAL_TYPE_OPTIONS} value="ACCESS_KEY" /> */}
-                {/* </FormField> */}
+                <FormField
+                  label={{ content: 'Scan Schedule Setting' }}
+                  isLineBreak={true}
+                  error={errors.scheduleScanEnabled}
+                >
+                  <RadioGroup
+                    optionList={[
+                      { value: 'true', label: 'Enabled' },
+                      { value: 'false', label: 'Disabled' },
+                    ]}
+                    name="scheduleScanEnabled"
+                    control={control}
+                    className="flex flex-col items-center gap-2 md:flex-row"
+                  />
+                </FormField>
               </fieldset>
 
               <fieldset className="space-y-6 py-8">
@@ -198,7 +212,7 @@ const CreateButton = () => {
               <BasicButton onClick={() => setIsModalOpen(false)} type="button" variant="outline">
                 Cancel
               </BasicButton>
-              <ConfirmButton type="submit" theme="blue" errors={errors}>
+              <ConfirmButton type="submit" theme="blue" isValid={isValid}>
                 Review
               </ConfirmButton>
             </div>

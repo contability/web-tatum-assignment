@@ -31,7 +31,7 @@ const ModalContainer = ({ onClose, children }: PropsWithChildren<ModalContainerP
         }
       }}
     >
-      <div className="w-full px-4" onClick={e => e.stopPropagation()} role="presentation">
+      <div className="w-fit px-4" onClick={e => e.stopPropagation()} role="presentation">
         {children}
       </div>
     </motion.div>

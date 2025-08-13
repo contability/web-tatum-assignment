@@ -17,7 +17,7 @@ export const cloudFormSchema = z.object({
   secretAccessKey: z.string().min(1, { message: '필수 입력 필드입니다.' }),
   region: z.string(),
   proxyUrl: z.string(),
-  scheduleScanEnabled: z.boolean().optional(),
+  scheduleScanEnabled: z.string(),
   frequency: z.string(),
   date: z.string(),
   weekday: z.string(),

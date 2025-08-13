@@ -10,7 +10,6 @@ import TableRow from '@Components/table/table-row';
 import TableCell from '@Components/table/table-cell';
 import MobileCard from '@Components/card/mobile-card';
 import MobileCardField from '@Components/card/mobile-card-field';
-import ActionButton from '@Components/button/action-button';
 import { useCloudList } from 'lib/services/cloud/client';
 import Loading from '@Components/spinner/circle';
 import EmptyState from '@Components/data-display/empty-state';
@@ -75,7 +74,7 @@ const CloudContentList = () => {
                   </TableCell>
 
                   <TableCell>
-                    <div className="flex gap-1 overflow-x-auto">
+                    <div className="scrollbar-hide flex gap-1 overflow-x-auto">
                       {cloudData.cloudGroupName && cloudData.cloudGroupName.length > 0 ? (
                         cloudData.cloudGroupName.map(groupName => (
                           <Chip key={`cloud-group-${groupName}`} variant="primary">
@@ -153,12 +152,12 @@ const CloudContentList = () => {
             }
             actions={
               <>
-                <ActionButton theme="blue" aria-label={`${cloudData.name} 편집`}>
-                  EDIT
-                </ActionButton>
-                <ActionButton theme="red" aria-label={`${cloudData.name} 삭제`}>
-                  DELETE
-                </ActionButton>
+                <button type="button">
+                  <TbEdit className="text-primary-blue" size={16} />
+                </button>
+                <button type="button">
+                  <RiDeleteBin5Line className="text-error-red" size={16} />
+                </button>
               </>
             }
           >
