@@ -2,17 +2,15 @@ import { CLOUD_LIST_DATA } from '@Constants/cloud-instance';
 import { Cloud } from '@DataTypes/types';
 import { NextResponse } from 'next/server';
 
-const getCloudListWithDelay = (): Promise<Cloud[]> => {
+const getCloudList = (): Promise<Cloud[]> => {
   return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(CLOUD_LIST_DATA);
-    }, 500);
+    resolve(CLOUD_LIST_DATA);
   });
 };
 
 export async function GET() {
   try {
-    const cloudList = await getCloudListWithDelay();
+    const cloudList = await getCloudList();
     return NextResponse.json({
       success: true,
       httpStatusCode: 200,

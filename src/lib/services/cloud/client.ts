@@ -18,3 +18,18 @@ export const useCloudList = () => {
     refetchOnWindowFocus: false,
   });
 };
+
+const getAdminCloudDetail = async (cloudId: string) => {
+  const result = await axiosClientAPI().get<StandardResponse<Cloud>>(
+    `/admin/management/users/cloud/detail?cloud-id=${cloudId}`,
+  );
+  return result;
+};
+
+export const useCloudDetail = (cloudId: string) => {
+  return useQuery({
+    queryKey: QUERY_KEY_FACTORY('CLOUD').detail(cloudId),
+    queryFn: async () => await getAdminCloudDetail(cloudId),
+    refetchOnWindowFocus: false,
+  });
+};
