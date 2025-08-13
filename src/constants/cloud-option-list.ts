@@ -1,6 +1,6 @@
-import { SelectOption } from '@Components/fields/select';
+import { LabelValuePair } from '@DataTypes/pair';
 
-export const PROVIDER_OPTIONS: SelectOption[] = [
+export const PROVIDER_OPTIONS: LabelValuePair[] = [
   {
     label: 'AWS',
     value: 'AWS',
@@ -17,7 +17,7 @@ export const PROVIDER_OPTIONS: SelectOption[] = [
   },
 ];
 
-export const AWS_CREDENTIAL_TYPE_OPTIONS: SelectOption[] = [
+export const AWS_CREDENTIAL_TYPE_OPTIONS: LabelValuePair[] = [
   {
     label: 'ACCESS KEY',
     value: 'ACCESS_KEY',
@@ -32,7 +32,7 @@ export const AWS_CREDENTIAL_TYPE_OPTIONS: SelectOption[] = [
   },
 ];
 
-export const AWS_REGION_LIST: SelectOption[] = [
+export const AWS_REGION_LIST: LabelValuePair[] = [
   {
     label: 'global',
     value: 'global',

@@ -29,12 +29,13 @@ const Select = ({ optionList, value, register, className }: SelectProps) => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const handleSelectOption = (optionId: string | number) => {
+  const handleSelectOption = (optionValue: string | number, isDisabled?: boolean) => {
+    if (isDisabled) return;
     if (register) {
       register.onChange({
         target: {
           name: register.name,
-          value: parseValue(optionId),
+          value: parseValue(optionValue),
         },
       } as ChangeEvent<HTMLInputElement>);
     }
@@ -73,12 +74,17 @@ const Select = ({ optionList, value, register, className }: SelectProps) => {
               aria-selected={parseValue(option.value) === parseValue(value)}
             >
               <button
-                onClick={() => handleSelectOption(option.value)}
-                className={`flex w-full items-center px-3 py-2 text-left text-base transition-colors duration-150 hover:bg-blue-50 md:text-lg ${
-                  parseValue(option.value) === parseValue(value)
-                    ? 'bg-blue-50 font-medium text-blue-600'
-                    : 'text-gray-800'
-                }`}
+                onClick={() => handleSelectOption(option.value, option.disabled)}
+                disabled={option.disabled}
+                aria-disabled={option.disabled}
+                className={twMerge(
+                  'flex w-full items-center px-3 py-2 text-left text-base transition-colors duration-150 md:text-lg',
+                  option.disabled
+                    ? 'cursor-not-allowed bg-gray-50 text-gray-400'
+                    : parseValue(option.value) === parseValue(value)
+                      ? 'bg-blue-50 font-medium text-blue-600 hover:bg-blue-100'
+                      : 'text-gray-800 hover:bg-blue-50',
+                )}
               >
                 <span className="truncate">{option.label}</span>
               </button>
