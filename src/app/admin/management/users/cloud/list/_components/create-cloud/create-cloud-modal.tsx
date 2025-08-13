@@ -7,7 +7,16 @@ import RadioGroup from '@Components/fields/radio-group';
 import Modal from '@Components/modal';
 import BasicButton from '@Components/button/basic-button';
 import ConfirmButton from '@Components/button/confirm-button';
-import { AWS_CREDENTIAL_TYPE_OPTIONS, AWS_REGION_LIST, PROVIDER_OPTIONS } from '@Constants/cloud-option-list';
+import {
+  AWS_CREDENTIAL_TYPE_OPTIONS,
+  AWS_REGION_OPTIONS,
+  PROVIDER_OPTIONS,
+  SCHEDULE_DATE_OPTIONS,
+  SCHEDULE_FREQUENCY_OPTIONS,
+  SCHEDULE_HOUR_OPTIONS,
+  SCHEDULE_MINUTE_OPTIONS,
+  SCHEDULE_WEEKDAY_OPTIONS,
+} from '@Constants/cloud-option-list';
 import { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
@@ -133,7 +142,7 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
             <fieldset className="space-y-6 py-8">
               <legend className="sr-only">클라우드 설정</legend>
               <FormField label={{ content: 'Region' }} isLineBreak={true} error={errors.region}>
-                <Select optionList={AWS_REGION_LIST} value={regionValue} register={register('region')} />
+                <Select optionList={AWS_REGION_OPTIONS} value={regionValue} register={register('region')} />
               </FormField>
 
               <FormField label={{ id: 'proxy-url', content: 'Proxy URL' }} isLineBreak={true} error={errors.proxyUrl}>
@@ -165,19 +174,19 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
             <fieldset className="space-y-6 py-8">
               <legend>Set Scan Frequency</legend>
               <p className="text-sm text-gray-700 md:text-base">Scan Schedule: Daily 12:00 AM</p>
-              <Select optionList={AWS_REGION_LIST} value={frequencyValue} register={register('frequency')} />
+              <Select optionList={SCHEDULE_FREQUENCY_OPTIONS} value={frequencyValue} register={register('frequency')} />
               <div className="space-y-4 pl-8">
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Date' }} error={errors.date}>
-                  <Select optionList={AWS_REGION_LIST} value={dateValue} register={register('date')} />
+                  <Select optionList={SCHEDULE_DATE_OPTIONS} value={dateValue} register={register('date')} />
                 </FormField>
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Day of Week' }} error={errors.weekday}>
-                  <Select optionList={AWS_REGION_LIST} value={weekdayValue} register={register('weekday')} />
+                  <Select optionList={SCHEDULE_WEEKDAY_OPTIONS} value={weekdayValue} register={register('weekday')} />
                 </FormField>
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Hour' }} error={errors.hour}>
-                  <Select optionList={AWS_REGION_LIST} value={hourValue} register={register('hour')} />
+                  <Select optionList={SCHEDULE_HOUR_OPTIONS} value={hourValue} register={register('hour')} />
                 </FormField>
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Minute' }} error={errors.minute}>
-                  <Select optionList={AWS_REGION_LIST} value={minuteValue} register={register('minute')} />
+                  <Select optionList={SCHEDULE_MINUTE_OPTIONS} value={minuteValue} register={register('minute')} />
                 </FormField>
               </div>
             </fieldset>
