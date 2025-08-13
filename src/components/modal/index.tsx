@@ -32,7 +32,7 @@ const Modal = ({ isOpen, onClose, className = '', children }: PropsWithChildren<
           <>
             <ModalOverlay onClose={onClose} />
             <motion.div
-              className={`absolute top-1/2 left-1/2 z-[53] block w-auto -translate-x-1/2 -translate-y-1/2 px-4 ${className}`}
+              className={`fixed top-1/2 left-1/2 z-[53] block w-auto -translate-x-1/2 -translate-y-1/2 px-4 ${className}`}
               initial={{
                 y: 20,
                 opacity: 0,
