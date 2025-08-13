@@ -107,7 +107,6 @@ export const AWS_REGION_OPTIONS: LabelValuePair[] = [
   },
 ];
 
-// ScheduleScanSetting 옵션들
 export const SCHEDULE_FREQUENCY_OPTIONS: LabelValuePair[] = [
   {
     label: 'HOUR',

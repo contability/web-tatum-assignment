@@ -8,7 +8,6 @@ import Modal from '@Components/modal';
 import BasicButton from '@Components/button/basic-button';
 import ConfirmButton from '@Components/button/confirm-button';
 import {
-  AWS_CREDENTIAL_TYPE_OPTIONS,
   AWS_REGION_OPTIONS,
   PROVIDER_OPTIONS,
   SCHEDULE_DATE_OPTIONS,
@@ -17,11 +16,14 @@ import {
   SCHEDULE_MINUTE_OPTIONS,
   SCHEDULE_WEEKDAY_OPTIONS,
 } from '@Constants/cloud-option-list';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 import { cloudFormSchema, CloudFormValues } from '../../_schema/cloud';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { CREDENTIAL_FIELD_CONFIGS } from '@Constants/credential-fields';
+import { FIELD_LEVELS, FREQUENCY_LEVELS } from '@Constants/schedule-levels';
+import DynamicCredentialFields from './dynamic-credential-fields';
 
 interface CreateCloudModalProps {
   isOpen: boolean;
@@ -36,6 +38,7 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
     watch,
     control,
     formState: { errors, isValid },
+    setValue,
   } = useForm<CloudFormValues>({
     resolver: zodResolver(cloudFormSchema),
     mode: 'onChange',
@@ -43,8 +46,16 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
       name: '',
       provider: '',
       credentialType: '',
+
       accessKey: '',
       secretAccessKey: '',
+      roleArn: '',
+      tenantId: '',
+      subscriptionId: '',
+      applicationId: '',
+      secretKey: '',
+      projectId: '',
+      jsonText: '',
       region: '',
       proxyUrl: '',
       scheduleScanEnabled: 'true',
@@ -60,8 +71,6 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
   const nameValue = watch('name');
   const providerValue = watch('provider');
   const credentialTypeValue = watch('credentialType');
-  const accessKeyValue = watch('accessKey');
-  const secretAccessKeyValue = watch('secretAccessKey');
   const regionValue = watch('region');
   const proxyUrlValue = watch('proxyUrl');
   const frequencyValue = watch('frequency');
@@ -70,6 +79,55 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
   const hourValue = watch('hour');
   const minuteValue = watch('minute');
   const cloudTrailNameValue = watch('cloudTrailName');
+
+  const getCredentialTypeOptions = () => {
+    if (!providerValue) return [];
+    const providerConfig = CREDENTIAL_FIELD_CONFIGS[providerValue];
+    return providerConfig?.credentialTypes || [];
+  };
+
+  const isFieldEnabled = (frequency: string, fieldName: keyof typeof FIELD_LEVELS) => {
+    const frequencyLevel = FREQUENCY_LEVELS[frequency as keyof typeof FREQUENCY_LEVELS] || 0;
+    const fieldLevel = FIELD_LEVELS[fieldName];
+
+    if (fieldName === 'weekday') {
+      return frequencyLevel === 3;
+    }
+
+    return frequencyLevel >= fieldLevel;
+  };
+
+  useEffect(() => {
+    if (providerValue) {
+      setValue('credentialType', '');
+
+      const allCredentialFieldNames = [
+        'accessKey',
+        'secretAccessKey',
+        'roleArn',
+        'tenantId',
+        'subscriptionId',
+        'applicationId',
+        'secretKey',
+        'projectId',
+        'jsonText',
+      ];
+      allCredentialFieldNames.forEach(fieldName => {
+        setValue(fieldName as keyof CloudFormValues, '');
+      });
+    }
+  }, [providerValue, setValue]);
+
+  useEffect(() => {
+    if (frequencyValue) {
+      const scheduleFields = ['date', 'weekday', 'hour', 'minute'] as const;
+      scheduleFields.forEach(fieldName => {
+        if (!isFieldEnabled(frequencyValue, fieldName)) {
+          setValue(fieldName, '');
+        }
+      });
+    }
+  }, [frequencyValue, setValue]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="w-full max-w-4xl md:max-w-[80rem]">
@@ -106,42 +164,32 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
                 <Select optionList={PROVIDER_OPTIONS} register={register('provider')} value={providerValue} />
               </FormField>
 
-              <FormField
-                label={{ content: 'Select Key Registration Method' }}
-                isLineBreak={true}
-                error={errors.credentialType}
-              >
-                <Select
-                  optionList={AWS_CREDENTIAL_TYPE_OPTIONS}
-                  register={register('credentialType')}
-                  value={credentialTypeValue}
-                />
-              </FormField>
+              {providerValue && (
+                <FormField
+                  label={{ content: 'Select Key Registration Method' }}
+                  isLineBreak={true}
+                  error={errors.credentialType}
+                >
+                  <Select
+                    optionList={getCredentialTypeOptions()}
+                    register={register('credentialType')}
+                    value={credentialTypeValue}
+                  />
+                </FormField>
+              )}
             </fieldset>
 
-            <fieldset className="py-8">
-              <legend className="mb-6">Credentials</legend>
-              <div className="space-y-4 pl-8">
-                <FormField
-                  label={{ id: 'access-key', content: 'Access Key' }}
-                  isRequired={true}
-                  error={errors.accessKey}
-                >
-                  <Input id="access-key" {...register('accessKey')} value={accessKeyValue} />
-                </FormField>
-                <FormField
-                  label={{ id: 'secret-key', content: 'Secret Key' }}
-                  isRequired={true}
-                  error={errors.secretAccessKey}
-                >
-                  <Input id="secret-key" {...register('secretAccessKey')} value={secretAccessKeyValue} />
-                </FormField>
-              </div>
-            </fieldset>
+            <DynamicCredentialFields
+              provider={providerValue}
+              credentialType={credentialTypeValue}
+              register={register}
+              errors={errors}
+            />
 
             <fieldset className="space-y-6 py-8">
               <legend className="sr-only">클라우드 설정</legend>
               <FormField label={{ content: 'Region' }} isLineBreak={true} error={errors.region}>
+                {/* TODO: 멀티 셀렉트 기능 필요. */}
                 <Select optionList={AWS_REGION_OPTIONS} value={regionValue} register={register('region')} />
               </FormField>
 
@@ -177,16 +225,36 @@ const CreateCloudModal = ({ isOpen, onClose, onSubmit }: CreateCloudModalProps) 
               <Select optionList={SCHEDULE_FREQUENCY_OPTIONS} value={frequencyValue} register={register('frequency')} />
               <div className="space-y-4 pl-8">
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Date' }} error={errors.date}>
-                  <Select optionList={SCHEDULE_DATE_OPTIONS} value={dateValue} register={register('date')} />
+                  <Select
+                    optionList={SCHEDULE_DATE_OPTIONS}
+                    value={dateValue}
+                    register={register('date')}
+                    isDisabled={!isFieldEnabled(frequencyValue, 'date')}
+                  />
                 </FormField>
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Day of Week' }} error={errors.weekday}>
-                  <Select optionList={SCHEDULE_WEEKDAY_OPTIONS} value={weekdayValue} register={register('weekday')} />
+                  <Select
+                    optionList={SCHEDULE_WEEKDAY_OPTIONS}
+                    value={weekdayValue}
+                    register={register('weekday')}
+                    isDisabled={!isFieldEnabled(frequencyValue, 'weekday')}
+                  />
                 </FormField>
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Hour' }} error={errors.hour}>
-                  <Select optionList={SCHEDULE_HOUR_OPTIONS} value={hourValue} register={register('hour')} />
+                  <Select
+                    optionList={SCHEDULE_HOUR_OPTIONS}
+                    value={hourValue}
+                    register={register('hour')}
+                    isDisabled={!isFieldEnabled(frequencyValue, 'hour')}
+                  />
                 </FormField>
                 <FormField labelClassName="w-28 text-right" label={{ content: 'Minute' }} error={errors.minute}>
-                  <Select optionList={SCHEDULE_MINUTE_OPTIONS} value={minuteValue} register={register('minute')} />
+                  <Select
+                    optionList={SCHEDULE_MINUTE_OPTIONS}
+                    value={minuteValue}
+                    register={register('minute')}
+                    isDisabled={!isFieldEnabled(frequencyValue, 'minute')}
+                  />
                 </FormField>
               </div>
             </fieldset>

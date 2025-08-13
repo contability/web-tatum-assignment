@@ -12,9 +12,10 @@ interface SelectProps {
   value: string;
   register?: UseFormRegisterReturn;
   className?: string;
+  isDisabled?: boolean;
 }
 
-const Select = ({ optionList, value, register, className }: SelectProps) => {
+const Select = ({ optionList, value, register, className, isDisabled = false }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -29,8 +30,8 @@ const Select = ({ optionList, value, register, className }: SelectProps) => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const handleSelectOption = (optionValue: string | number, isDisabled?: boolean) => {
-    if (isDisabled) return;
+  const handleSelectOption = (optionValue: string | number, isDisabledOption?: boolean) => {
+    if (isDisabledOption || isDisabled) return;
     if (register) {
       register.onChange({
         target: {
@@ -46,15 +47,18 @@ const Select = ({ optionList, value, register, className }: SelectProps) => {
     <div className="relative w-full">
       <button
         ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => !isDisabled && setIsOpen(!isOpen)}
+        disabled={isDisabled}
         className={twMerge(
           'flex w-full items-center justify-between rounded-md border border-gray-300 bg-white p-2 px-3 text-left text-base transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none md:text-lg lg:p-3 lg:text-xl',
           isOpen ? 'border-blue-500 ring-2 ring-blue-100' : 'border-gray-300',
+          isDisabled ? 'cursor-not-allowed bg-gray-50 opacity-50' : '',
           className,
         )}
         type="button"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-disabled={isDisabled}
       >
         <span className="truncate text-gray-800">{selectedOption}</span>
         <MdOutlineKeyboardArrowDown
@@ -62,7 +66,7 @@ const Select = ({ optionList, value, register, className }: SelectProps) => {
           className={`ml-2 flex-shrink-0 text-gray-800 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
-      {isOpen && (
+      {isOpen && !isDisabled && (
         <ul
           role="listbox"
           className="ring-opacity-5 absolute z-60 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg ring-1 ring-black"

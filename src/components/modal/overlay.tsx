@@ -4,7 +4,6 @@ export interface ModalContainerProps {
   onClose?: () => void;
 }
 
-// FIXME: 모달 크기 동적으로 조절할 수 있도록 변경 필요
 const ModalOverlay = ({ onClose }: ModalContainerProps) => {
   return (
     <motion.div

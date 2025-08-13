@@ -126,6 +126,7 @@ const CloudContentList = () => {
                   </TableCell>
 
                   <TableCell>
+                    {/* TODO: EDIT 클릭 동작 구현 필요 */}
                     <button type="button">
                       <TbEdit className="text-primary-blue" size={20} />
                     </button>

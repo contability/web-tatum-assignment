@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import ConfirmButton from './index';
-import { FieldErrors } from 'react-hook-form';
 
 const meta: Meta<typeof ConfirmButton> = {
   title: 'Components/Button/ConfirmButton',
@@ -44,21 +43,12 @@ const meta: Meta<typeof ConfirmButton> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 에러가 없는 경우 - 활성화 상태
-const noErrors: FieldErrors = {};
-
-// 에러가 있는 경우 - 비활성화 상태
-const withErrors: FieldErrors = {
-  name: { type: 'required', message: '이름은 필수입니다.' },
-  email: { type: 'invalid', message: '이메일 형식이 올바르지 않습니다.' },
-};
-
 export const Default: Story = {
   args: {
     children: 'Confirm',
     theme: 'blue',
     size: 'md',
-    errors: noErrors,
+    isValid: true,
   },
 };
 
@@ -67,7 +57,7 @@ export const NoErrors: Story = {
   args: {
     children: 'Submit Form',
     theme: 'blue',
-    errors: noErrors,
+    isValid: true,
   },
   parameters: {
     docs: {
@@ -83,7 +73,7 @@ export const WithErrors: Story = {
   args: {
     children: 'Submit Form',
     theme: 'blue',
-    errors: withErrors,
+    isValid: false,
   },
   parameters: {
     docs: {
@@ -98,19 +88,19 @@ export const AllThemesEnabled: Story = {
   name: '모든 테마 (활성화)',
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <ConfirmButton theme="blue" errors={noErrors}>
+      <ConfirmButton theme="blue" isValid={true}>
         Blue
       </ConfirmButton>
-      <ConfirmButton theme="gray" errors={noErrors}>
+      <ConfirmButton theme="gray" isValid={true}>
         Gray
       </ConfirmButton>
-      <ConfirmButton theme="green" errors={noErrors}>
+      <ConfirmButton theme="green" isValid={true}>
         Green
       </ConfirmButton>
-      <ConfirmButton theme="yellow" errors={noErrors}>
+      <ConfirmButton theme="yellow" isValid={true}>
         Yellow
       </ConfirmButton>
-      <ConfirmButton theme="red" errors={noErrors}>
+      <ConfirmButton theme="red" isValid={true}>
         Red
       </ConfirmButton>
     </div>
@@ -128,19 +118,19 @@ export const AllThemesDisabled: Story = {
   name: '모든 테마 (비활성화)',
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <ConfirmButton theme="blue" errors={withErrors}>
+      <ConfirmButton theme="blue" isValid={false}>
         Blue
       </ConfirmButton>
-      <ConfirmButton theme="gray" errors={withErrors}>
+      <ConfirmButton theme="gray" isValid={false}>
         Gray
       </ConfirmButton>
-      <ConfirmButton theme="green" errors={withErrors}>
+      <ConfirmButton theme="green" isValid={false}>
         Green
       </ConfirmButton>
-      <ConfirmButton theme="yellow" errors={withErrors}>
+      <ConfirmButton theme="yellow" isValid={false}>
         Yellow
       </ConfirmButton>
-      <ConfirmButton theme="red" errors={withErrors}>
+      <ConfirmButton theme="red" isValid={false}>
         Red
       </ConfirmButton>
     </div>
@@ -159,13 +149,13 @@ export const AllSizes: Story = {
   name: '모든 크기',
   render: () => (
     <div className="flex flex-wrap items-center gap-4">
-      <ConfirmButton theme="blue" size="sm" errors={noErrors}>
+      <ConfirmButton theme="blue" size="sm" isValid={true}>
         Small
       </ConfirmButton>
-      <ConfirmButton theme="blue" size="md" errors={noErrors}>
+      <ConfirmButton theme="blue" size="md" isValid={true}>
         Medium
       </ConfirmButton>
-      <ConfirmButton theme="blue" size="lg" errors={noErrors}>
+      <ConfirmButton theme="blue" size="lg" isValid={true}>
         Large
       </ConfirmButton>
     </div>
@@ -184,7 +174,7 @@ export const ExplicitlyDisabled: Story = {
   args: {
     children: 'Disabled Button',
     theme: 'blue',
-    errors: noErrors,
+    isValid: true,
     disabled: true,
   },
   parameters: {
