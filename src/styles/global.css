@@ -217,6 +217,115 @@
   }
 }
 
+@layer components {
+  /* Button Base Classes */
+  .btn-base {
+    @apply rounded-md border transition-colors focus:ring-2 focus:ring-offset-1 focus:outline-none;
+  }
+
+  /* Button Size Classes */
+  .btn-sm {
+    @apply px-3 py-2 text-sm;
+  }
+
+  .btn-md {
+    @apply px-4 py-3 text-base;
+  }
+
+  .btn-lg {
+    @apply px-6 py-4 text-lg;
+  }
+
+  /* Button Theme Classes - Default Variant */
+  .btn-default-blue {
+    @apply border-blue-600 bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+
+  .btn-default-gray {
+    @apply border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+  }
+
+  .btn-default-green {
+    @apply border-green-600 bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+
+  .btn-default-yellow {
+    @apply border-yellow-600 bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500;
+  }
+
+  .btn-default-red {
+    @apply border-red-600 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+
+  /* Button Theme Classes - Outline Variant */
+  .btn-outline-blue {
+    @apply border-blue-600 bg-white text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+  }
+
+  .btn-outline-gray {
+    @apply border-gray-400 bg-white text-gray-700 hover:bg-gray-200 focus:ring-gray-500;
+  }
+
+  .btn-outline-green {
+    @apply border-green-600 bg-white text-green-600 hover:bg-green-50 focus:ring-green-500;
+  }
+
+  .btn-outline-yellow {
+    @apply border-yellow-600 bg-white text-yellow-600 hover:bg-yellow-50 focus:ring-yellow-500;
+  }
+
+  .btn-outline-red {
+    @apply border-red-600 bg-white text-red-600 hover:bg-red-50 focus:ring-red-500;
+  }
+
+  /* Button Theme Classes - Ghost Variant */
+  .btn-ghost-blue {
+    @apply border-transparent bg-transparent text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+  }
+
+  .btn-ghost-gray {
+    @apply border-transparent bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500;
+  }
+
+  .btn-ghost-green {
+    @apply border-transparent bg-transparent text-green-600 hover:bg-green-50 focus:ring-green-500;
+  }
+
+  .btn-ghost-yellow {
+    @apply border-transparent bg-transparent text-yellow-600 hover:bg-yellow-50 focus:ring-yellow-500;
+  }
+
+  .btn-ghost-red {
+    @apply border-transparent bg-transparent text-red-600 hover:bg-red-50 focus:ring-red-500;
+  }
+
+  /* Confirm Button Theme Classes */
+  .btn-confirm-blue {
+    @apply border-blue-600 bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+
+  .btn-confirm-gray {
+    @apply border-gray-600 bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+  }
+
+  .btn-confirm-green {
+    @apply border-green-600 bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+
+  .btn-confirm-yellow {
+    @apply border-yellow-600 bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500;
+  }
+
+  .btn-confirm-red {
+    @apply border-red-600 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+
+  /* Disabled Button */
+  .btn-disabled {
+    @apply cursor-not-allowed border-gray-300 bg-gray-300 text-gray-500;
+  }
+}
+
 .rdp-selected .rdp-day_button {
   border: 2px solid #7b8165;
 }

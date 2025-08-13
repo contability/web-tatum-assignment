@@ -12,6 +12,8 @@ import { IoMdClose } from 'react-icons/io';
 import { cloudFormSchema, CloudFormValues } from '../_schema/cloud';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { convertValidationObjectValue } from '@Utils/validation';
+import BasicButton from '@Components/button/basic-button';
+import ConfirmButton from '@Components/button/confirm-button';
 
 const CreateButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -23,7 +25,7 @@ const CreateButton = () => {
     formState: { errors },
   } = useForm<CloudFormValues>({
     resolver: zodResolver(cloudFormSchema),
-    mode: 'onSubmit',
+    mode: 'onChange',
     defaultValues: {
       name: '',
       provider: '',
@@ -148,6 +150,7 @@ const CreateButton = () => {
                   />
                 </FormField>
 
+                {/* TODO: 라디오 버튼 추가 필요 */}
                 {/* <FormField label={{ content: 'Scan Schedule Setting' }} isLineBreak={true} error={errors.scheduleScanSetting}> */}
                 {/* <Select optionList={AWS_CREDENTIAL_TYPE_OPTIONS} value="ACCESS_KEY" /> */}
                 {/* </FormField> */}
@@ -192,21 +195,12 @@ const CreateButton = () => {
             </div>
 
             <div className="flex items-center justify-end gap-3 px-8 py-6">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                type="button"
-                className="rounded-md border border-gray-400 px-4 py-3 transition-colors hover:bg-gray-200"
-              >
+              <BasicButton onClick={() => setIsModalOpen(false)} type="button" variant="outline">
                 Cancel
-              </button>
-              {/* TODO: ConfirmButton 컴포넌트 추가 필요 */}
-              <button
-                onClick={() => {}}
-                type="submit"
-                className="rounded-md border border-gray-400 px-4 py-3 transition-colors hover:bg-gray-200"
-              >
+              </BasicButton>
+              <ConfirmButton type="submit" theme="blue" errors={errors}>
                 Review
-              </button>
+              </ConfirmButton>
             </div>
           </form>
         </div>
