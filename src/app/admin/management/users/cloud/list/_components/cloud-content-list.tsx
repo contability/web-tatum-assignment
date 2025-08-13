@@ -13,8 +13,8 @@ import MobileCardField from '@Components/card/mobile-card-field';
 import { useCloudList } from 'lib/services/cloud/client';
 import Loading from '@Components/spinner/circle';
 import EmptyState from '@Components/data-display/empty-state';
-import { TbEdit } from 'react-icons/tb';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import EditCloudContainer from './edit-cloud/edit-cloud-container';
 
 const CloudContentList = () => {
   const { data: cloudListData, isLoading } = useCloudList();
@@ -126,10 +126,7 @@ const CloudContentList = () => {
                   </TableCell>
 
                   <TableCell>
-                    {/* TODO: EDIT 클릭 동작 구현 필요 */}
-                    <button type="button">
-                      <TbEdit className="text-primary-blue" size={20} />
-                    </button>
+                    <EditCloudContainer cloudId={cloudData.id} cloudName={cloudData.name} size={20} />
                   </TableCell>
 
                   <TableCell>
@@ -153,9 +150,7 @@ const CloudContentList = () => {
             }
             actions={
               <>
-                <button type="button">
-                  <TbEdit className="text-primary-blue" size={16} />
-                </button>
+                <EditCloudContainer cloudId={cloudData.id} cloudName={cloudData.name} size={16} />
                 <button type="button">
                   <RiDeleteBin5Line className="text-error-red" size={16} />
                 </button>

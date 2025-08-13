@@ -23,13 +23,14 @@ const getAdminCloudDetail = async (cloudId: string) => {
   const result = await axiosClientAPI().get<StandardResponse<Cloud>>(
     `/admin/management/users/cloud/detail?cloud-id=${cloudId}`,
   );
-  return result;
+  return result.data;
 };
 
-export const useCloudDetail = (cloudId: string) => {
+export const useCloudDetail = (cloudId?: string) => {
   return useQuery({
-    queryKey: QUERY_KEY_FACTORY('CLOUD').detail(cloudId),
-    queryFn: async () => await getAdminCloudDetail(cloudId),
+    queryKey: QUERY_KEY_FACTORY('CLOUD').detail(cloudId || ''),
+    queryFn: async () => await getAdminCloudDetail(cloudId || ''),
     refetchOnWindowFocus: false,
+    enabled: !!cloudId,
   });
 };

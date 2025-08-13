@@ -16,22 +16,28 @@ import {
   SCHEDULE_MINUTE_OPTIONS,
   SCHEDULE_WEEKDAY_OPTIONS,
 } from '@Constants/cloud-option-list';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
-import { cloudFormSchema, CloudFormValues } from '../../_schema/cloud';
+import { cloudFormSchema, CloudFormValues } from '../_schema/cloud';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CREDENTIAL_FIELD_CONFIGS } from '@Constants/credential-fields';
 import { FIELD_LEVELS, FREQUENCY_LEVELS } from '@Constants/schedule-levels';
-import DynamicCredentialFields from './dynamic-credential-fields';
+import DynamicCredentialFields from './create-cloud/dynamic-credential-fields';
+import { useCloudDetail } from 'lib/services/cloud/client';
 
-interface CreateCloudModalProps {
+interface CloudModalProps {
   isOpen: boolean;
+  cloudId?: string;
   handleCloseModal: () => void;
   onSubmit: (formData: CloudFormValues) => void;
 }
 
-const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudModalProps) => {
+const CloudModal = ({ isOpen, cloudId, handleCloseModal, onSubmit }: CloudModalProps) => {
+  const { data: cloudDetailData } = useCloudDetail(cloudId);
+  const cloudDetailResult = cloudDetailData?.result;
+  const isEditMode = !!cloudId;
+
   const {
     register,
     handleSubmit,
@@ -47,7 +53,6 @@ const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudMod
       name: '',
       provider: '',
       credentialType: '',
-
       accessKey: '',
       secretAccessKey: '',
       roleArn: '',
@@ -69,8 +74,49 @@ const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudMod
     },
   });
 
+  const resetFormToOriginalData = useCallback(() => {
+    if (!cloudDetailResult) return;
+
+    const scheduleSettings = cloudDetailResult.scheduleScanSetting;
+
+    setValue('name', cloudDetailResult.name || '');
+    setValue('provider', cloudDetailResult.provider || '');
+    setValue('credentialType', cloudDetailResult.credentialType || '');
+    setValue('region', cloudDetailResult.regionList?.[0] || '');
+    setValue('proxyUrl', cloudDetailResult.proxyUrl || '');
+    setValue('scheduleScanEnabled', cloudDetailResult.scheduleScanEnabled ? 'true' : 'false');
+
+    if (scheduleSettings) {
+      setValue('frequency', scheduleSettings.frequency || '');
+      setValue('date', scheduleSettings.date || '');
+      setValue('weekday', scheduleSettings.weekday || '');
+      setValue('hour', scheduleSettings.hour || '');
+      setValue('minute', scheduleSettings.minute || '');
+    }
+
+    if (cloudDetailResult.eventSource && 'cloudTrailName' in cloudDetailResult.eventSource) {
+      setValue('cloudTrailName', cloudDetailResult.eventSource.cloudTrailName || '');
+    }
+
+    const allCredentialFieldNames = [
+      'accessKey',
+      'secretAccessKey',
+      'roleArn',
+      'tenantId',
+      'subscriptionId',
+      'applicationId',
+      'secretKey',
+      'projectId',
+      'jsonText',
+    ];
+    allCredentialFieldNames.forEach(fieldName => {
+      setValue(fieldName as keyof CloudFormValues, '');
+    });
+  }, [cloudDetailResult, setValue]);
+
   const handleClose = () => {
-    reset();
+    if (isEditMode && cloudDetailResult) resetFormToOriginalData();
+    else reset();
     handleCloseModal();
   };
 
@@ -135,11 +181,15 @@ const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudMod
     }
   }, [frequencyValue, setValue]);
 
+  useEffect(() => {
+    if (isEditMode && cloudDetailResult) resetFormToOriginalData();
+  }, [isEditMode, cloudDetailResult, resetFormToOriginalData]);
+
   return (
     <Modal isOpen={isOpen} onClose={handleClose} className="w-full max-w-4xl md:max-w-[80rem]">
       <div className="w-full rounded-md bg-white shadow-md">
         <div className="flex items-center justify-between px-8 py-6">
-          <h2 className="text-4xl font-bold">Create Cloud</h2>
+          <h2 className="text-4xl font-bold">{isEditMode ? 'Edit Cloud' : 'Create Cloud'}</h2>
           <button
             onClick={handleClose}
             aria-label="모달 닫기"
@@ -285,7 +335,7 @@ const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudMod
               Cancel
             </BasicButton>
             <ConfirmButton type="submit" theme="blue" isValid={isValid}>
-              Review
+              {isEditMode ? 'Update' : 'Review'}
             </ConfirmButton>
           </div>
         </form>
@@ -294,5 +344,5 @@ const CreateCloudModal = ({ isOpen, handleCloseModal, onSubmit }: CreateCloudMod
   );
 };
 
-CreateCloudModal.displayName = 'CreateCloudModal';
-export default memo(CreateCloudModal);
+CloudModal.displayName = 'CloudModal';
+export default memo(CloudModal);

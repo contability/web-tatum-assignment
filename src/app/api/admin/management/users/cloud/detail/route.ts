@@ -13,7 +13,7 @@ const getCloudDetail = (cloudId: string): Promise<Cloud | undefined> => {
 
 export async function GET(request: NextRequest) {
   try {
-    const cloudId = request.nextUrl.searchParams.get('cloudId');
+    const cloudId = request.nextUrl.searchParams.get('cloud-id');
 
     if (!cloudId)
       return NextResponse.json(

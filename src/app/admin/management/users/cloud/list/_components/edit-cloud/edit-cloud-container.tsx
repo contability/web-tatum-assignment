@@ -1,12 +1,18 @@
 'use client';
 
 import { memo, useState } from 'react';
-import CreateCloudButton from './create-cloud-button';
+import EditCloudButton from './edit-cloud-button';
 import CloudModal from '../cloud-modal';
 import { CloudFormValues } from '../../_schema/cloud';
 import { convertValidationObjectValue } from '@Utils/validation';
 
-const CreateCloudContainer = () => {
+interface EditCloudContainerProps {
+  cloudId: string;
+  cloudName: string;
+  size?: number;
+}
+
+const EditCloudContainer = ({ cloudId, cloudName, size = 20 }: EditCloudContainerProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -21,18 +27,19 @@ const CreateCloudContainer = () => {
     const body = convertValidationObjectValue(cloudFormValues);
 
     console.log('✨ Form validation passed');
-    console.log('🚀 [Cloud Creation] POST /api/admin/management/users/cloud/list');
+    console.log('🚀 [Cloud Edit] PUT /api/admin/management/users/cloud/edit');
     console.log('📦 Request Body:', body);
+    console.log('🆔 Cloud ID:', cloudId);
     setIsModalOpen(false);
   };
 
   return (
     <>
-      <CreateCloudButton onClick={handleOpenModal} />
-      <CloudModal isOpen={isModalOpen} handleCloseModal={handleCloseModal} onSubmit={handleSubmit} />
+      <EditCloudButton cloudName={cloudName} onClick={handleOpenModal} size={size} />
+      <CloudModal isOpen={isModalOpen} cloudId={cloudId} handleCloseModal={handleCloseModal} onSubmit={handleSubmit} />
     </>
   );
 };
 
-CreateCloudContainer.displayName = 'CreateCloudContainer';
-export default memo(CreateCloudContainer);
+EditCloudContainer.displayName = 'EditCloudContainer';
+export default memo(EditCloudContainer);
