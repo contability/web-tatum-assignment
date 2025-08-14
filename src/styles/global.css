@@ -168,10 +168,6 @@
     box-sizing: border-box;
   }
 
-  body {
-    /* background-color: #f6f2e5; */
-  }
-
   article,
   aside,
   details,
@@ -218,12 +214,10 @@
 }
 
 @layer components {
-  /* Button Base Classes */
   .btn-base {
     @apply rounded-md border transition-colors focus:ring-2 focus:ring-offset-1 focus:outline-none;
   }
 
-  /* Button Size Classes */
   .btn-sm {
     @apply px-3 py-2 text-sm;
   }
@@ -236,7 +230,6 @@
     @apply px-6 py-4 text-lg;
   }
 
-  /* Button Theme Classes - Default Variant */
   .btn-default-blue {
     @apply border-blue-600 bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
   }
@@ -257,7 +250,6 @@
     @apply border-red-600 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
   }
 
-  /* Button Theme Classes - Outline Variant */
   .btn-outline-blue {
     @apply border-blue-600 bg-white text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
   }
@@ -278,7 +270,6 @@
     @apply border-red-600 bg-white text-red-600 hover:bg-red-50 focus:ring-red-500;
   }
 
-  /* Button Theme Classes - Ghost Variant */
   .btn-ghost-blue {
     @apply border-transparent bg-transparent text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
   }
@@ -299,7 +290,6 @@
     @apply border-transparent bg-transparent text-red-600 hover:bg-red-50 focus:ring-red-500;
   }
 
-  /* Confirm Button Theme Classes */
   .btn-confirm-blue {
     @apply border-blue-600 bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
   }
@@ -320,9 +310,16 @@
     @apply border-red-600 bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
   }
 
-  /* Disabled Button */
   .btn-disabled {
     @apply cursor-not-allowed border-gray-300 bg-gray-300 text-gray-500;
+  }
+
+  .shadow-right {
+    @apply shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)];
+  }
+
+  .shadow-left {
+    @apply shadow-[-4px_0_6px_-1px_rgba(0,0,0,0.1)];
   }
 }
 

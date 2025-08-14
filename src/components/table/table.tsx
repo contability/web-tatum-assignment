@@ -55,7 +55,7 @@ const Table = ({
   return (
     <div className={`scrollbar-hide overflow-x-auto ${className ?? ''}`}>
       <div
-        className="grid gap-4"
+        className="grid"
         style={{
           gridTemplateColumns: `repeat(${columnCount}, minmax(${minColumnWidth}, 1fr))`,
         }}

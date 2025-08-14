@@ -58,8 +58,12 @@ const CloudContentList = () => {
               <TableHeaderCell>Real Time</TableHeaderCell>
               <TableHeaderCell>User Activity</TableHeaderCell>
               <TableHeaderCell>Credential Type</TableHeaderCell>
-              <TableHeaderCell>Edit</TableHeaderCell>
-              <TableHeaderCell>Delete</TableHeaderCell>
+              <TableHeaderCell sticky="right" stickyOffset={12} className="shadow-left">
+                Edit
+              </TableHeaderCell>
+              <TableHeaderCell sticky="right" stickyOffset={0}>
+                Delete
+              </TableHeaderCell>
             </TableHeader>
 
             <TableBody>
@@ -125,11 +129,11 @@ const CloudContentList = () => {
                     <span className="text-sm text-gray-600">{cloudData.credentialType}</span>
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell sticky="right" stickyOffset={12} className="shadow-left">
                     <EditCloudContainer cloudId={cloudData.id} cloudName={cloudData.name} size={20} />
                   </TableCell>
 
-                  <TableCell>
+                  <TableCell sticky="right" stickyOffset={0}>
                     <button type="button">
                       <RiDeleteBin5Line className="text-error-red" size={20} />
                     </button>
