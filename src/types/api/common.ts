@@ -4,3 +4,10 @@ export interface StandardResponse<T> {
   result: T;
   message?: string;
 }
+
+export interface ErrorResponse {
+  url?: string;
+  status: number;
+  message: string;
+  error: string;
+}

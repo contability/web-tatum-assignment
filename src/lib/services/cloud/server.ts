@@ -1,8 +1,8 @@
 import { QueryClient } from '@tanstack/react-query';
 import { QUERY_KEY_FACTORY } from '../query-key-factory';
 import { axiosServerAPI } from '../api-instance';
-import { StandardResponse } from '@DataTypes/api/standard-response';
 import { Cloud } from '@DataTypes/types';
+import { StandardResponse } from '@DataTypes/api/common';
 
 const fetchAdminCloudList = async () => {
   const result = await axiosServerAPI().get<StandardResponse<Cloud[]>>('/admin/management/users/cloud/list');

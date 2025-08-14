@@ -22,3 +22,5 @@
 ## [Naming Convention](./docs/naming-convention.md)
 
 ## [Git Convention](./docs/git-convention.md)
+
+## [대규모 API 관리 방안](./docs/api-management-strategy.md)
