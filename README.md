@@ -24,3 +24,5 @@
 ## [Git Convention](./docs/git-convention.md)
 
 ## [대규모 API 관리 방안](./docs/api-management-strategy.md)
+
+## [i18n 적용 방안 제시](./docs/i18n-optimization-plan.md)
