@@ -59,7 +59,7 @@ export function parseValue<T extends TParser = StringConstructor>(
       default:
         return stringValue as TInferParser<T>;
     }
-  } catch (error) {
+  } catch {
     if (defaultValue !== undefined) {
       return defaultValue as TInferParser<T>;
     }
