@@ -4,6 +4,7 @@ import { memo } from 'react';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import FormField from '@Components/fields/form-field';
 import Input from '@Components/fields/input';
+import Fieldset from '@Components/fields/fieldset';
 import { CREDENTIAL_FIELD_CONFIGS, CredentialFieldConfig } from '@Constants/credential-fields';
 import { CloudFormValues } from '../../_schema/cloud';
 
@@ -61,10 +62,9 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
   };
 
   return (
-    <fieldset className="py-8">
-      <h4 className="mb-6">Credentials</h4>
+    <Fieldset heading={{ text: 'Credentials', type: 'h4', className: 'mb-6' }}>
       <div className="space-y-4 pl-8">{fields.map(renderField)}</div>
-    </fieldset>
+    </Fieldset>
   );
 };
 

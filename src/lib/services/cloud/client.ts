@@ -26,11 +26,11 @@ const getAdminCloudDetail = async (cloudId: string) => {
   return result.data;
 };
 
-export const useCloudDetail = (cloudId?: string) => {
+export const useCloudDetail = (cloudId?: string, isModalOpen?: boolean) => {
   return useQuery({
     queryKey: QUERY_KEY_FACTORY('CLOUD').detail(cloudId || ''),
     queryFn: async () => await getAdminCloudDetail(cloudId || ''),
     refetchOnWindowFocus: false,
-    enabled: !!cloudId,
+    enabled: !!cloudId && !!isModalOpen,
   });
 };
