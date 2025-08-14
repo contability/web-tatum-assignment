@@ -11,7 +11,7 @@ describe('Select 컴포넌트', () => {
   test('기본 Select가 올바르게 렌더링되어야 한다', () => {
     render(<Select optionList={mockOptions} value="" />);
 
-    const selectButton = screen.getByText('선택');
+    const selectButton = screen.getByText('Please select value.');
     expect(selectButton).toBeInTheDocument();
   });
 
