@@ -123,6 +123,7 @@ const MultiSelect = ({
             return (
               <li key={`multi-select-box__option-${option.value}`} role="option" aria-selected={isSelected}>
                 <button
+                  type="button"
                   onClick={() => handleSelectOption(option.value, option.disabled)}
                   disabled={option.disabled}
                   aria-disabled={option.disabled}
