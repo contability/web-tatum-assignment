@@ -22,14 +22,14 @@ const MultiSelect = ({
   register,
   className,
   isDisabled = false,
-  placeholder = '선택해주세요',
+  placeholder = 'Please select value.',
 }: MultiSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const selectedOptions = optionList.filter(option => {
     const parsedValue = parseValue(option.value);
-    return value.includes(parsedValue?.toString() || '');
+    return value.includes(parsedValue || '');
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const MultiSelect = ({
     if (isDisabledOption || isDisabled) return;
 
     const parsedValue = parseValue(optionValue);
-    const stringValue = parsedValue?.toString() || '';
+    const stringValue = parsedValue || '';
     const currentValue = value;
     let newValue: string[];
 
@@ -119,7 +119,7 @@ const MultiSelect = ({
         >
           {optionList.map(option => {
             const parsedValue = parseValue(option.value);
-            const isSelected = value.includes(parsedValue?.toString() || '');
+            const isSelected = value.includes(parsedValue || '');
             return (
               <li key={`multi-select-box__option-${option.value}`} role="option" aria-selected={isSelected}>
                 <button

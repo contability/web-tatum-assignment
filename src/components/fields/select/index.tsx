@@ -19,7 +19,8 @@ const Select = ({ optionList, value, register, className, isDisabled = false }: 
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const selectedOption = optionList.find(option => parseValue(option.value) === parseValue(value))?.label || '선택';
+  const selectedOption =
+    optionList.find(option => parseValue(option.value) === parseValue(value))?.label || 'Please select value.';
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,6 +52,7 @@ const Select = ({ optionList, value, register, className, isDisabled = false }: 
         disabled={isDisabled}
         className={twMerge(
           'flex w-full items-center justify-between rounded-md border border-gray-300 bg-white p-2 px-3 text-left text-base transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none md:text-lg lg:p-3 lg:text-xl',
+          !value && 'text-gray-500',
           isOpen ? 'border-blue-500 ring-2 ring-blue-100' : 'border-gray-300',
           isDisabled ? 'cursor-not-allowed bg-gray-50 opacity-50' : '',
           className,
