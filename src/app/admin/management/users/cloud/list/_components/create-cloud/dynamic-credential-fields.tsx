@@ -1,7 +1,6 @@
 'use client';
 
-import { memo } from 'react';
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, FieldError } from 'react-hook-form';
 import FormField from '@Components/fields/form-field';
 import Input from '@Components/fields/input';
 import Fieldset from '@Components/fields/fieldset';
@@ -32,7 +31,7 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
 
   const renderField = (field: CredentialFieldConfig) => {
     const fieldName = field.name as keyof CloudFormValues;
-    const fieldError = errors[fieldName];
+    const fieldError = errors[fieldName] as FieldError;
 
     const commonProps = {
       id: field.id,
@@ -46,7 +45,7 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
         label={{ id: field.id, content: field.label }}
         isRequired={field.required}
         error={fieldError}
-        labelClassName="min-w-[5.3rem] md:min-w-[6.8rem]"
+        labelClassName="min-w-[5.3rem] md:min-w-[6rem]"
       >
         {field.type === 'textarea' ? (
           <textarea
@@ -69,4 +68,4 @@ const DynamicCredentialFields = ({ provider, credentialType, register, errors }:
 };
 
 DynamicCredentialFields.displayName = 'DynamicCredentialFields';
-export default memo(DynamicCredentialFields);
+export default DynamicCredentialFields;

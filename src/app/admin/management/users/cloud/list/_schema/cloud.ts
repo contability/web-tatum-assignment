@@ -14,7 +14,7 @@ const baseCloudFormSchema = z.object({
   name: z.string().min(1, { message: '필수 입력 필드입니다.' }),
   credentialType: z.string(),
   provider: z.string(),
-  region: z.string(),
+  region: z.array(z.string()),
   proxyUrl: z.string(),
   scheduleScanEnabled: z.string(),
   frequency: z.string(),

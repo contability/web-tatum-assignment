@@ -3,6 +3,7 @@
 import FormField from '@Components/fields/form-field';
 import Input from '@Components/fields/input';
 import Select from '@Components/fields/select';
+import MultiSelect from '@Components/fields/multi-select';
 import RadioGroup from '@Components/fields/radio-group';
 import Fieldset from '@Components/fields/fieldset';
 import Modal from '@Components/modal';
@@ -64,7 +65,7 @@ const CloudModal = ({ isOpen, cloudId, handleCloseModal, onSubmit }: CloudModalP
       secretKey: '',
       projectId: '',
       jsonText: '',
-      region: '',
+      region: [],
       proxyUrl: '',
       scheduleScanEnabled: 'true',
       frequency: '',
@@ -84,7 +85,7 @@ const CloudModal = ({ isOpen, cloudId, handleCloseModal, onSubmit }: CloudModalP
     setValue('name', cloudDetailResult.name || '');
     setValue('provider', cloudDetailResult.provider || '');
     setValue('credentialType', cloudDetailResult.credentialType || '');
-    setValue('region', cloudDetailResult.regionList?.[0] || '');
+    setValue('region', cloudDetailResult.regionList || []);
     setValue('proxyUrl', cloudDetailResult.proxyUrl || '');
     setValue('scheduleScanEnabled', cloudDetailResult.scheduleScanEnabled ? 'true' : 'false');
 
@@ -251,9 +252,17 @@ const CloudModal = ({ isOpen, cloudId, handleCloseModal, onSubmit }: CloudModalP
               />
 
               <Fieldset heading={{ text: '클라우드 설정', type: 'legend' }}>
-                <FormField label={{ content: 'Region' }} isLineBreak={true} error={errors.region}>
-                  {/* TODO: 멀티 셀렉트 기능 필요. */}
-                  <Select optionList={AWS_REGION_OPTIONS} value={regionValue} register={register('region')} />
+                <FormField
+                  label={{ content: 'Region' }}
+                  isLineBreak={true}
+                  error={Array.isArray(errors.region) ? errors.region[0] : errors.region}
+                >
+                  <MultiSelect
+                    optionList={AWS_REGION_OPTIONS}
+                    value={regionValue}
+                    register={register('region')}
+                    placeholder="Please select regions."
+                  />
                 </FormField>
 
                 <FormField label={{ id: 'proxy-url', content: 'Proxy URL' }} isLineBreak={true} error={errors.proxyUrl}>
